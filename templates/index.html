@@ -14,7 +14,7 @@
     <div class="section">ctime: {{ data['ctime'] }}</div>
     <div class="section">cwd: {{ data['cwd'] }}</div>
     {% for key, val in data['env'].items(): %}
-      <div class="section">{{ key }}: {{ val }}</div>
+      <div class="section">{{ key }}:<br>{{ val }}</div>
     {% endfor %}
   </div>
 </body>
