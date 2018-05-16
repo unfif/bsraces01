@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    data{
+    data = {
         'ctime': datetime.now().ctime(),
         'cwd': os.getcwd(),
         'env': os.environ
