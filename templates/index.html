@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test Flask 01</title>
+</head>
+<body>
+  <header>
+    <h1>Test Flask 01</h1>
+  </header>
+  <div class="contents">
+    <div class="section">{{ datetime.now().ctime() }}</div>
+    <div class="section">{{ os.getcwd() }}</div>
+    {% for each in os.environ: %}
+      <div class="section">{{ each }}</div>
+    {% endfor %}
+  </div>
+</body>
+<style>
+  body, h1, h2, h3, h4, h5, h6{
+    margin: 0;
+    padding: 0;
+  }
+
+  header{
+    padding: 20px;
+    background: #000;
+    color: #fff;
+  }
+
+  .section{
+    padding: 5px 20px;
+    background: #eee;
+    border-bottom: 2px solid #000;
+  }
+</style>
+</html>
