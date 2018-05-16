@@ -13,8 +13,8 @@
   <div class="contents">
     <div class="section">ctime: {{ data['ctime'] }}</div>
     <div class="section">cwd: {{ data['cwd'] }}</div>
-    {% for each in data['env']: %}
-      <div class="section">{{ each }}</div>
+    {% for key, val in data['env'].items: %}
+      <div class="section">{{ key }}: {{ val }}</div>
     {% endfor %}
   </div>
 </body>
