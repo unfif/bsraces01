@@ -7,8 +7,9 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     html = '<header style="padding: 20px; background: #000; color: #fff;"><h1>Test app 01</h1></header>'
-    html += '<div class="section"">' + datetime.now().ctime() + '</div>'
-    html += '<div class="section" style="padding: 20px; background: #eee; border-bottom: 2px solid #000;">' + os.cwd() + '</div>'
+    html += '<div class="section">' + datetime.now().ctime() + '</div>'
+    html += '<div class="section">' + os.getcwd() + '</div>'
+    html += '<div class="section">' + os.environ.get() + '</div>'
     html += '<style>body, h1, h2, h3, h4, h5, h6{margin: 0; padding: 0;} .section{padding: 20px; background: #eee; border-bottom: 2px solid #000;}</style>'
     return html
 
