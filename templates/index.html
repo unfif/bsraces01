@@ -11,9 +11,9 @@
     <h1>Test Flask 01</h1>
   </header>
   <div class="contents">
-    <div class="section">{{ datetime.now().ctime() }}</div>
-    <div class="section">{{ os.getcwd() }}</div>
-    {% for each in os.environ: %}
+    <div class="section">ctime: {{ ctime }}</div>
+    <div class="section">cwd: {{ cwd }}</div>
+    {% for each in env: %}
       <div class="section">{{ each }}</div>
     {% endfor %}
   </div>
