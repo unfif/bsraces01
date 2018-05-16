@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test Flask 01</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
   <header>
@@ -36,4 +37,9 @@
     border-bottom: 2px solid #000;
   }
 </style>
+<script>
+  $(document).ready(function(){
+    $('header').append('<small>' + $.fn.jquery + '</small>');
+  })
+</script>
 </html>
