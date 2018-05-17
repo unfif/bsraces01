@@ -8,6 +8,13 @@ flask = "*"
 "beautifulsoup4" = "*"
 requests = "*"
 lxml = "*"
+numpy = "*"
+pandas = "*"
+jsonify = "*"
+"html5lib" = "*"
+scikit-learn = "*"
+flask-socketio = "*"
+gspread = "*"
 
 [dev-packages]
 
