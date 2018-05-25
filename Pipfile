@@ -17,6 +17,7 @@ flask-socketio = "*"
 gspread = "*"
 gtts = "*"
 pychromecast = "*"
+setuptools = "*"
 
 [dev-packages]
 

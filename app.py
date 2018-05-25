@@ -1,11 +1,20 @@
+# In[]
 from flask import Flask, render_template
-import os
+import os, requests
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
+# In[]
 @app.route('/')
 def index():
+    data = {}
+    
+    return render_template('index.html', data=data)
+
+@app.route('/env')
+def env():
     data = {
         'ctime': datetime.now().ctime(),
         'cwd': os.getcwd(),
@@ -20,7 +29,7 @@ def index():
     # html += '<style>body, h1, h2, h3, h4, h5, h6{margin: 0; padding: 0;} .section{padding: 5px 20px; background: #eee; border-bottom: 2px solid #000;}</style>'
     # return html
 
-    return render_template('index.html', data=data)
+    return render_template('env.html', data=data)
 
 @app.route("/favicon.ico")
 def favicon():
@@ -28,4 +37,5 @@ def favicon():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', '5000'))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.debug = True
+    app.run(host='0.0.0.0', port=port)

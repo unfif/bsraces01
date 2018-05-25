@@ -1,46 +1,1030 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Test Flask 01</title>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-</head>
-<body>
-  <header>
-    <h1>Test Flask 01</h1>
-  </header>
-  <div class="contents">
-    <div class="section">ctime:<br>{{ data['ctime'] }}</div>
-    <div class="section">cwd:<br>{{ data['cwd'] }}</div>
-    {% for key, val in data['env'].items(): %}
-      <div class="section">{{ key }}:<br>{{ val }}</div>
-    {% endfor %}
-  </div>
-</body>
-<style>
-  body, h1, h2, h3, h4, h5, h6{
-    margin: 0;
-    padding: 0;
-  }
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <title>
+   test
+  </title>
+  <link href="./static/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="./static/js/jquery-3.3.1.min.js">
+  </script>
+  <script src="./static/js/popper.min.js">
+  </script>
+  <!-- <script src="./static/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+  <script src="./static/js/bootstrap.min.js">
+  </script>
+ </head>
+ <body>
+  <table class="race_table_01 nk_tb_common table table-striped table-hover" summary="レース結果">
+   <thead class="thead-dark">
+    <tr>
+     <th>
+      着順
+     </th>
+     <th>
+      枠番
+     </th>
+     <th>
+      馬番
+     </th>
+     <th>
+      馬名
+     </th>
+     <th>
+      性齢
+     </th>
+     <th>
+      負担重量
+     </th>
+     <th>
+      騎手
+     </th>
+     <th>
+      タイム
+     </th>
+     <th>
+      着差
+     </th>
+     <th>
+      人気
+     </th>
+     <th>
+      単勝オッズ
+     </th>
+     <diary_snap_cut>
+      <th>
+       後3F
+      </th>
+      <th>
+       コーナー通過順
+      </th>
+     </diary_snap_cut>
+     <th>
+      厩舎
+     </th>
+     <th>
+      馬体重
+     </th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td class="result_rank" scope="row">
+      1
+     </td>
+     <td class="waku5">
+      <span>
+       5
+      </span>
+     </td>
+     <td>
+      9
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2014101512/" target="_blank">
+       リヴェルディ
+      </a>
+     </td>
+     <td>
+      牡4
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01018/" target="_blank">
+       和田
+      </a>
+     </td>
+     <td>
+      2:12.2
+     </td>
+     <td>
+     </td>
+     <td class="bml">
+      4
+     </td>
+     <td class="txt_r">
+      7.1
+     </td>
+     <diary_snap_cut>
+      <td class="r1ml">
+       35.9
+      </td>
+      <td class="txt_l">
+       14-13-13-12
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01081/" target="_blank">
+       中川
+      </a>
+     </td>
+     <td class="txt_l">
+      512(+2)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      2
+     </td>
+     <td class="waku8">
+      <span>
+       8
+      </span>
+     </td>
+     <td>
+      16
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2011106481/" target="_blank">
+       トウカイエントリー
+      </a>
+     </td>
+     <td>
+      牡7
+     </td>
+     <td>
+      56.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01096/" target="_blank">
+       大野
+      </a>
+     </td>
+     <td>
+      2:12.6
+     </td>
+     <td>
+      2.1/2
+     </td>
+     <td class="bml">
+      6
+     </td>
+     <td class="txt_r">
+      10.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       36.8
+      </td>
+      <td class="txt_l">
+       7-7-7-6
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01127/" target="_blank">
+       栗田徹
+      </a>
+     </td>
+     <td class="txt_l">
+      504(+2)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      3
+     </td>
+     <td class="waku4">
+      <span>
+       4
+      </span>
+     </td>
+     <td>
+      8
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012104104/" target="_blank">
+       レッドサバス
+      </a>
+     </td>
+     <td>
+      牡6
+     </td>
+     <td>
+      56.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01075/" target="_blank">
+       田辺
+      </a>
+     </td>
+     <td>
+      2:12.8
+     </td>
+     <td>
+      1
+     </td>
+     <td class="r2ml">
+      2
+     </td>
+     <td class="txt_r">
+      5.7
+     </td>
+     <diary_snap_cut>
+      <td class="r3ml">
+       36.4
+      </td>
+      <td class="txt_l">
+       11-11-13-14
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (栗東)
+      <a href="http://db.netkeiba.com/trainer/01011/" target="_blank">
+       松田
+      </a>
+     </td>
+     <td class="txt_l">
+      472(-6)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      4
+     </td>
+     <td class="waku5">
+      <span>
+       5
+      </span>
+     </td>
+     <td>
+      10
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012103663/" target="_blank">
+       ビスカリア
+      </a>
+     </td>
+     <td>
+      牝6
+     </td>
+     <td>
+      53.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01154/" target="_blank">
+       松若
+      </a>
+     </td>
+     <td>
+      2:12.8
+     </td>
+     <td>
+      クビ
+     </td>
+     <td class="bml">
+      12
+     </td>
+     <td class="txt_r">
+      32.3
+     </td>
+     <diary_snap_cut>
+      <td class="r2ml">
+       36.2
+      </td>
+      <td class="txt_l">
+       16-16-15-15
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (栗東)
+      <a href="http://db.netkeiba.com/trainer/00388/" target="_blank">
+       山内
+      </a>
+     </td>
+     <td class="txt_l">
+      466(0)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      5
+     </td>
+     <td class="waku3">
+      <span>
+       3
+      </span>
+     </td>
+     <td>
+      6
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012105917/" target="_blank">
+       オースミラナキラ
+      </a>
+     </td>
+     <td>
+      牡6
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01062/" target="_blank">
+       川島
+      </a>
+     </td>
+     <td>
+      2:12.9
+     </td>
+     <td>
+      3/4
+     </td>
+     <td class="r3ml">
+      3
+     </td>
+     <td class="txt_r">
+      7.1
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       36.8
+      </td>
+      <td class="txt_l">
+       10-11-10-8
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (栗東)
+      <a href="http://db.netkeiba.com/trainer/01095/" target="_blank">
+       荒川
+      </a>
+     </td>
+     <td class="txt_l">
+      518(+2)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      6
+     </td>
+     <td class="waku4">
+      <span>
+       4
+      </span>
+     </td>
+     <td>
+      7
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2013105498/" target="_blank">
+       スウィフトレイド
+      </a>
+     </td>
+     <td>
+      牡5
+     </td>
+     <td>
+      56.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01116/" target="_blank">
+       藤岡康
+      </a>
+     </td>
+     <td>
+      2:13.0
+     </td>
+     <td>
+      3/4
+     </td>
+     <td class="bml">
+      7
+     </td>
+     <td class="txt_r">
+      11.1
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       36.9
+      </td>
+      <td class="txt_l">
+       7-7-10-8
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01070/" target="_blank">
+       堀
+      </a>
+     </td>
+     <td class="txt_l">
+      510(0)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      7
+     </td>
+     <td class="waku8">
+      <span>
+       8
+      </span>
+     </td>
+     <td>
+      15
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2014101854/" target="_blank">
+       スペリオルシチー
+      </a>
+     </td>
+     <td>
+      牡4
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/05203/" target="_blank">
+       岩田
+      </a>
+     </td>
+     <td>
+      2:13.1
+     </td>
+     <td>
+      クビ
+     </td>
+     <td class="bml">
+      5
+     </td>
+     <td class="txt_r">
+      8.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       37.7
+      </td>
+      <td class="txt_l">
+       5-5-2-2
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01020/" target="_blank">
+       相沢
+      </a>
+     </td>
+     <td class="txt_l">
+      468(+8)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      8
+     </td>
+     <td class="waku1">
+      <span>
+       1
+      </span>
+     </td>
+     <td>
+      2
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2013101292/" target="_blank">
+       ラテールプロミーズ
+      </a>
+     </td>
+     <td>
+      牡5
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01122/" target="_blank">
+       三浦
+      </a>
+     </td>
+     <td>
+      2:13.6
+     </td>
+     <td>
+      3
+     </td>
+     <td class="bml">
+      8
+     </td>
+     <td class="txt_r">
+      11.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       37.4
+      </td>
+      <td class="txt_l">
+       7-7-10-12
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01027/" target="_blank">
+       田村
+      </a>
+     </td>
+     <td class="txt_l">
+      510(+2)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      9
+     </td>
+     <td class="waku3">
+      <span>
+       3
+      </span>
+     </td>
+     <td>
+      5
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2011100643/" target="_blank">
+       テイエムコンドル
+      </a>
+     </td>
+     <td>
+      牡7
+     </td>
+     <td>
+      54.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/05386/" target="_blank">
+       戸崎圭
+      </a>
+     </td>
+     <td>
+      2:13.6
+     </td>
+     <td>
+      クビ
+     </td>
+     <td class="bml">
+      10
+     </td>
+     <td class="txt_r">
+      20.7
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       37.0
+      </td>
+      <td class="txt_l">
+       14-13-15-15
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01043/" target="_blank">
+       石栗
+      </a>
+     </td>
+     <td class="txt_l">
+      468(0)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      10
+     </td>
+     <td class="waku6">
+      <span>
+       6
+      </span>
+     </td>
+     <td>
+      11
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012105799/" target="_blank">
+       ピアシングステア
+      </a>
+     </td>
+     <td>
+      牡6
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/00422/" target="_blank">
+       内田博
+      </a>
+     </td>
+     <td>
+      2:13.8
+     </td>
+     <td>
+      1.1/4
+     </td>
+     <td class="bml">
+      11
+     </td>
+     <td class="txt_r">
+      24.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       38.3
+      </td>
+      <td class="txt_l">
+       11-10-2-5
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01106/" target="_blank">
+       牧
+      </a>
+     </td>
+     <td class="txt_l">
+      508(+6)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      11
+     </td>
+     <td class="waku2">
+      <span>
+       2
+      </span>
+     </td>
+     <td>
+      4
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2013104884/" target="_blank">
+       マイネルビクトリー
+      </a>
+     </td>
+     <td>
+      牡5
+     </td>
+     <td>
+      55.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01009/" target="_blank">
+       柴田大
+      </a>
+     </td>
+     <td>
+      2:14.0
+     </td>
+     <td>
+      1.1/4
+     </td>
+     <td class="bml">
+      9
+     </td>
+     <td class="txt_r">
+      18.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       38.6
+      </td>
+      <td class="txt_l">
+       13-13-2-1
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01048/" target="_blank">
+       畠山
+      </a>
+     </td>
+     <td class="txt_l">
+      488(-4)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      12
+     </td>
+     <td class="waku6">
+      <span>
+       6
+      </span>
+     </td>
+     <td>
+      12
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012102921/" target="_blank">
+       メイプルレインボー
+      </a>
+     </td>
+     <td>
+      牡6
+     </td>
+     <td>
+      54.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01169/" target="_blank">
+       武藤
+      </a>
+     </td>
+     <td>
+      2:14.0
+     </td>
+     <td>
+      クビ
+     </td>
+     <td class="bml">
+      15
+     </td>
+     <td class="txt_r">
+      113.4
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       38.6
+      </td>
+      <td class="txt_l">
+       3-4-2-2
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01014/" target="_blank">
+       高市
+      </a>
+     </td>
+     <td class="txt_l">
+      490(+6)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      13
+     </td>
+     <td class="waku2">
+      <span>
+       2
+      </span>
+     </td>
+     <td>
+      3
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012100601/" target="_blank">
+       バイタルフォース
+      </a>
+     </td>
+     <td>
+      セ6
+     </td>
+     <td>
+      56.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/05212/" target="_blank">
+       Ｍデムーロ
+      </a>
+     </td>
+     <td>
+      2:14.1
+     </td>
+     <td>
+      クビ
+     </td>
+     <td class="r1ml">
+      1
+     </td>
+     <td class="txt_r">
+      4.9
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       38.1
+      </td>
+      <td class="txt_l">
+       5-5-7-8
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01017/" target="_blank">
+       萩原
+      </a>
+     </td>
+     <td class="txt_l">
+      506(+4)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      14
+     </td>
+     <td class="waku1">
+      <span>
+       1
+      </span>
+     </td>
+     <td>
+      1
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2010100034/" target="_blank">
+       コアレスキング
+      </a>
+     </td>
+     <td>
+      牡8
+     </td>
+     <td>
+      52.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01031/" target="_blank">
+       村田
+      </a>
+     </td>
+     <td>
+      2:14.3
+     </td>
+     <td>
+      1.1/2
+     </td>
+     <td class="bml">
+      16
+     </td>
+     <td class="txt_r">
+      296.6
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       38.3
+      </td>
+      <td class="txt_l">
+       3-2-7-8
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/00383/" target="_blank">
+       伊藤正
+      </a>
+     </td>
+     <td class="txt_l">
+      542(+2)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      15
+     </td>
+     <td class="waku7">
+      <span>
+       7
+      </span>
+     </td>
+     <td>
+      13
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2012105988/" target="_blank">
+       クラウンシャイン
+      </a>
+     </td>
+     <td>
+      牡6
+     </td>
+     <td>
+      56.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01150/" target="_blank">
+       石川
+      </a>
+     </td>
+     <td>
+      2:14.9
+     </td>
+     <td>
+      3.1/2
+     </td>
+     <td class="bml">
+      14
+     </td>
+     <td class="txt_r">
+      88.6
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       39.2
+      </td>
+      <td class="txt_l">
+       2-2-6-6
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (美浦)
+      <a href="http://db.netkeiba.com/trainer/01131/" target="_blank">
+       蛯名
+      </a>
+     </td>
+     <td class="txt_l">
+      484(+4)
+     </td>
+    </tr>
+    <tr>
+     <td class="result_rank" scope="row">
+      16
+     </td>
+     <td class="waku7">
+      <span>
+       7
+      </span>
+     </td>
+     <td>
+      14
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/horse/2011102290/" target="_blank">
+       ティーポイズン
+      </a>
+     </td>
+     <td>
+      牡7
+     </td>
+     <td>
+      54.0
+     </td>
+     <td class="txt_l">
+      <a href="http://db.netkeiba.com/jockey/01043/" target="_blank">
+       北村宏
+      </a>
+     </td>
+     <td>
+      2:15.4
+     </td>
+     <td>
+      3
+     </td>
+     <td class="bml">
+      13
+     </td>
+     <td class="txt_r">
+      46.2
+     </td>
+     <diary_snap_cut>
+      <td class="bml">
+       40.0
+      </td>
+      <td class="txt_l">
+       1-1-1-2
+      </td>
+     </diary_snap_cut>
+     <td class="txt_l">
+      (栗東)
+      <a href="http://db.netkeiba.com/trainer/00422/" target="_blank">
+       五十嵐
+      </a>
+     </td>
+     <td class="txt_l">
+      506(-8)
+     </td>
+    </tr>
+   </tbody>
+  </table>
+ </body>
+ <style>
+  /*body{
+        margin: 0;
+        padding: 0;
+        background: #333;
+    }
 
-  header{
-    display: flex;
-    padding: 10px, 20px;
-    background: #000;
-    color: #fff;
-  }
+    table{
+        border-collapse: collapse;
+    }*/
 
-  .section{
-    padding: 5px 20px;
-    background: #eee;
-    border-bottom: 2px solid #000;
-  }
-</style>
-<script>
-  $(document).ready(function(){
-    $('header').append('<small>' + $.fn.jquery + '</small>');
-  })
-</script>
+    th, td{
+        /*border: 1px solid #000;*/
+        white-space: nowrap;
+    }
+
+    /*th{
+        background: #666;
+        color: #eee;
+        text-align: center;
+    }
+
+    td {
+        background: #eee;
+    }*/
+ </style>
 </html>
