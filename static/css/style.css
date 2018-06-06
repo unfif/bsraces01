@@ -1,0 +1,29 @@
+html {
+  font-size: 12px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /*background: #eee;*/
+}
+
+/*table{
+  border-collapse: collapse;
+}*/
+
+.table th, .table td {
+  padding: 0.25rem;
+  /*border: 1px solid #000;*/
+  white-space: nowrap;
+}
+
+th {
+  /*background: #666;*/
+  /*color: #eee;*/
+  text-align: center;
+}
+
+/*td {
+  background: #eee;
+}*/

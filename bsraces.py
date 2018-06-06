@@ -18,23 +18,44 @@ def delattrs(obj, attrlist):
         for each in attrs:
             del each[attr]
 
+defaultlayout = '''
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+    </div>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+</html>'''.replace('\n', '')
+
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0527'
+racelistid = 'p0603'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
-racelistreq = requests.get(racelisturl)
+racelistreq = requests.get(racelisturl) # commentouted posibelity
 # racelistreq.status_code
 
 bsracepage = BeautifulSoup(racelistreq.text, 'lxml')
 with open('C:/Users/pathz/Documents/web/netkeiba/fapp/racelist/racelist' + racelistid + '.html', mode='w', encoding='utf-8') as fw:
-    fw.write(str(bsracepage))
+    fw.write(str(bsracepage).replace('\n', ''))
 
 # In[]
-bsplacelist = bsracepage.select('.RaceList_Box .race_top_hold_list')
-# bsplacelist = [bsplacelist[0]]###
+tagplacelist = bsracepage.select('.RaceList_Box .race_top_hold_list')
+# tagplacelist = [tagplacelist[0]]###
 titles = []
 races = []
 detaillist = []
-for i, place in enumerate(bsplacelist):
+for i, place in enumerate(tagplacelist):
     titles.append(place.select('.kaisaidata')[0].text)
     races.append(place.ul('li'))
 
@@ -47,99 +68,47 @@ for i, place in enumerate(bsplacelist):
     detaillist[i]['title'] = titles[i]
     detaillist[i]['urls'] = urls
     detaillist[i]['bsraces'] = []
-    detaillist[i]['tagracetbls'] = []
-    detaillist[i]['bsracetbls'] = []
     for j, detailurl in enumerate(detaillist[i]['urls']):
-        bslist = detaillist[i]['bsraces']
+        bsraces = detaillist[i]['bsraces']
         reqdetailurl = requests.get(detailurl) # commentouted posibelity
-        bslist.append(BeautifulSoup(reqdetailurl.content, 'lxml'))
-        unwraptags(bslist[j], ['br', 'diary_snap', 'diary_snap_cut'])
-        delattrs(bslist[j], ['style', 'cellpadding', 'cellspacing'])
-        for table in bslist[j]('table'):
+        bsraces.append(BeautifulSoup(reqdetailurl.content, 'lxml'))
+        unwraptags(bsraces[j], ['br', 'diary_snap', 'diary_snap_cut'])
+        delattrs(bsraces[j], ['style', 'cellpadding', 'cellspacing'])
+        for table in bsraces[j]('table'):
             table['class'].extend(['table', 'table-striped', 'table-hover'])
 
-        for th in bslist[j]('th'):
+        for th in bsraces[j]('th'):
             contents = th.contents[:]
             th.string = ''
             for content in contents:
                 th.string += content
 
-        tagracetbls = detaillist[i]['tagracetbls']
-        tagracetbls.append(bslist[j].select('.race_table_01')[0])
+        bsraces[j].select('.race_table_01')[0].wrap(bsraces[j].new_tag('div'))
+        bsraces[j].select('.race_result.fc > div')[0]['class'] = ['table-responsive']
+        bsraces[j].select('.table-responsive')[0].wrap(bsraces[j].new_tag('div'))
+        bsraces[j].select('.race_result.fc > div')[0]['class'] = ['tblwrap']
+        bsraces[j].select('.tblwrap')[0].insert(0, bsraces[j].new_tag('div'))
+        bsraces[j].select('.tblwrap > div')[0]['class'] = ['tbltitle']
+        bsraces[j].select('.tblwrap > .tbltitle')[0].insert(0, bsraces[j].new_tag('h2'))
+        bsraces[j].select('.tblwrap > .tbltitle > h2')[0].string = 'R' + '{:02}'.format(j + 1)
 
-        tmptbl = BeautifulSoup('<table class="table table-striped table-hover"></table>', 'lxml')
+        bsraces[j].select('.race_table_01')[0].append(bsraces[j].new_tag('thead'))
+        bsraces[j].select('.race_table_01 > thead')[0]['class'] = ['thead-dark']
 
-        for k, tr in enumerate(tagracetbls[j]('tr')):
+        for k, tr in enumerate(bsraces[j].select('.race_table_01 > tr')):
             if k == 0:
-                tmptbl.table.append(tmptbl.new_tag('thead'))
-                tmptbl.thead['class'] = ['thead-dark']
-                tmptbl.thead.append(tr)
-                tmptbl.table.append(tmptbl.new_tag('tbody'))
+                bsraces[j].select('.race_table_01 > thead')[0].append(tr)
+                bsraces[j].select('.race_table_01')[0].append(bsraces[j].new_tag('tbody'))
             else:
-                tmptbl.tbody.append(tr)
-
-        detaillist[i]['bsracetbls'].append(tmptbl)
-
-# In[]
-defaultlayout = '''
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>test</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
-    <script src="../static/js/popper.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="table-responsive">
-        </div>
-    </div>
-</body>
-<style>
-    html{
-        font-size: 12px;
-    }
-
-    body{
-        margin: 0;
-        padding: 0;
-        /*background: #eee;*/
-    }
-
-    /*table{
-        border-collapse: collapse;
-    }*/
-
-    .table th, .table td{
-        padding: 0.25rem;
-        /*border: 1px solid #000;*/
-        white-space: nowrap;
-    }
-
-    th{
-        /*background: #666;*/
-        /*color: #eee;*/
-        text-align: center;
-    }
-
-    /*td {
-        background: #eee;
-    }*/
-</style>
-</html>'''
+                bsraces[j].select('.race_table_01 > tbody')[0].append(tr)
 
 bshtml = BeautifulSoup(defaultlayout, 'lxml')
 for detail in detaillist:
-    for bsracetbl in detail['bsracetbls']:
-        bshtml.find('div', attrs={'class': 'table-responsive'}).append(bsracetbl.table)
+    for bsrace in detail['bsraces']:
+        bshtml.find('div', attrs={'class': 'container-fluid'}).append(copy.copy(bsrace.select('.tblwrap')[0]))
 
 with open('C:/Users/pathz/Documents/heroku/testflask01/templates/index.html', mode='w', encoding='utf-8') as fw:
-    fw.write(str(bshtml))
+    fw.write(str(bshtml).replace('\n', ''))
 
 # In[]
 @app.route('/')
