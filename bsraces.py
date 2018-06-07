@@ -30,7 +30,7 @@ defaultlayout = '''
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid text-dark">
     </div>
     <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script src="../static/js/popper.min.js"></script>
@@ -88,7 +88,7 @@ for i, place in enumerate(tagplacelist):
         bsraces[j].select('.table-responsive')[0].wrap(bsraces[j].new_tag('div'))
         bsraces[j].select('.table-responsive')[0].find_parent()['class'] = ['tblwrap']
         bsraces[j].select('.tblwrap')[0].insert(0, bsraces[j].new_tag('div'))
-        bsraces[j].select('.tblwrap > div')[0]['class'] = ['tbltitle']
+        bsraces[j].select('.tblwrap > div')[0]['class'] = ['tbltitle', 'bg-light', 'text-dark']
         bsraces[j].select('.tblwrap > .tbltitle')[0].insert(0, bsraces[j].new_tag('h2'))
         # bsraces[j].select('.tblwrap > .tbltitle > h2')[0].string = '{:02}'.format(j + 1) + 'R'
 
@@ -106,15 +106,17 @@ for i, place in enumerate(tagplacelist):
         # bsraces[j].select('.race_place .active')[0].text
         # bsraces[j].select('.race_place ul.fc')[0]
         # bsraces[j].select('.mainrace_data .data_intro')[0]
-        racenum = bsraces[j].select('.mainrace_data .racedata h1')[0].text.zfill(3)
+        racenum = bsraces[j].select('.mainrace_data .racedata h1')[0].text
         bsraces[j].select('.mainrace_data .racedata h1')[0].replace_with(bsraces[j].new_tag('h5'))
         bsraces[j].select('.mainrace_data .racedata h5')[0].append(racenum)
-        bsraces[j].select('.mainrace_data .racedata')[0]
-        bsraces[j].select('.mainrace_data .race_otherdata')[0]
+        # bsraces[j].select('.mainrace_data .racedata')[0]
+        bsraces[j].select('.mainrace_data .racedata dt')[0].string = bsraces[j].select('.mainrace_data .racedata dt')[0].string.strip().zfill(3)
+        # bsraces[j].select('.mainrace_data .race_otherdata')[0]
 
         bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.DateList_Box .active')[0])
         bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.race_place ul.fc')[0])
         bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.mainrace_data .racedata')[0])
+        bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.mainrace_data .race_otherdata')[0])
 
 bshtml = BeautifulSoup(defaultlayout, 'lxml')
 for detail in detaillist:

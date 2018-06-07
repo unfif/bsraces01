@@ -10,12 +10,14 @@ body {
 
 .tbltitle{
   display: flex;
+  overflow: hidden;
   margin-top: 0.5em;
   padding: 0 1em 0.5rem 0;
   background: rgba(0,0,0,.05);
   border-bottom: 1px solid #aaa;
   border-right: 1px solid #aaa;
   border-radius: .75em .75em 0 0;
+  white-space: nowrap;
 }
 
 .tbltitle h5,
@@ -31,16 +33,14 @@ body {
   list-style: none;
 }
 
-/* .tbltitle ul.fc li{
-  margin: 0 0.5rem 0 0;
-} */
-
 .tbltitle *{
-  margin: 0 1.5rem 0 0;
+  margin: 0 .5rem 0 0;
 }
 
 .tbltitle ul.fc,
-.tbltitle ul.fc li{
+.tbltitle ul.fc li,
+.tbltitle dl.racedata,
+.tbltitle dl.racedata dd{
   margin-right: 0;
 }
 
@@ -48,8 +48,9 @@ body {
   color: #aaa;
 }
 
-.racedata,
-.racedata dd{
+dl.racedata,
+dl.racedata dd,
+.race_otherdata{
   display: flex;
 }
 
