@@ -84,13 +84,13 @@ for i, place in enumerate(tagplacelist):
                 th.string += content
 
         bsraces[j].select('.race_table_01')[0].wrap(bsraces[j].new_tag('div'))
-        bsraces[j].select('.race_result.fc > div')[0]['class'] = ['table-responsive']
+        bsraces[j].select('.race_table_01')[0].find_parent()['class'] = ['table-responsive']
         bsraces[j].select('.table-responsive')[0].wrap(bsraces[j].new_tag('div'))
-        bsraces[j].select('.race_result.fc > div')[0]['class'] = ['tblwrap']
+        bsraces[j].select('.table-responsive')[0].find_parent()['class'] = ['tblwrap']
         bsraces[j].select('.tblwrap')[0].insert(0, bsraces[j].new_tag('div'))
         bsraces[j].select('.tblwrap > div')[0]['class'] = ['tbltitle']
         bsraces[j].select('.tblwrap > .tbltitle')[0].insert(0, bsraces[j].new_tag('h2'))
-        bsraces[j].select('.tblwrap > .tbltitle > h2')[0].string = 'R' + '{:02}'.format(j + 1)
+        # bsraces[j].select('.tblwrap > .tbltitle > h2')[0].string = '{:02}'.format(j + 1) + 'R'
 
         bsraces[j].select('.race_table_01')[0].append(bsraces[j].new_tag('thead'))
         bsraces[j].select('.race_table_01 > thead')[0]['class'] = ['thead-dark']
@@ -101,6 +101,20 @@ for i, place in enumerate(tagplacelist):
                 bsraces[j].select('.race_table_01')[0].append(bsraces[j].new_tag('tbody'))
             else:
                 bsraces[j].select('.race_table_01 > tbody')[0].append(tr)
+
+        # bsraces[j].select('.DateList_Box .active')[0]
+        # bsraces[j].select('.race_place .active')[0].text
+        # bsraces[j].select('.race_place ul.fc')[0]
+        # bsraces[j].select('.mainrace_data .data_intro')[0]
+        racenum = bsraces[j].select('.mainrace_data .racedata h1')[0].text.zfill(3)
+        bsraces[j].select('.mainrace_data .racedata h1')[0].replace_with(bsraces[j].new_tag('h5'))
+        bsraces[j].select('.mainrace_data .racedata h5')[0].append(racenum)
+        bsraces[j].select('.mainrace_data .racedata')[0]
+        bsraces[j].select('.mainrace_data .race_otherdata')[0]
+
+        bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.DateList_Box .active')[0])
+        bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.race_place ul.fc')[0])
+        bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.mainrace_data .racedata')[0])
 
 bshtml = BeautifulSoup(defaultlayout, 'lxml')
 for detail in detaillist:

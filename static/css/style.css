@@ -8,9 +8,54 @@ body {
   /*background: #eee;*/
 }
 
-/*table{
-  border-collapse: collapse;
-}*/
+.tbltitle{
+  display: flex;
+  margin-top: 0.5em;
+  padding: 0 1em 0.5rem 0;
+  background: rgba(0,0,0,.05);
+  border-bottom: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-radius: .75em .75em 0 0;
+}
+
+.tbltitle h5,
+.tbltitle dl,
+.tbltitle p{
+  margin-bottom: 0;
+}
+
+.tbltitle ul.fc{
+  display: flex;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* .tbltitle ul.fc li{
+  margin: 0 0.5rem 0 0;
+} */
+
+.tbltitle *{
+  margin: 0 1.5rem 0 0;
+}
+
+.tbltitle ul.fc,
+.tbltitle ul.fc li{
+  margin-right: 0;
+}
+
+.tbltitle ul.fc li a:not(.active){
+  color: #aaa;
+}
+
+.racedata,
+.racedata dd{
+  display: flex;
+}
+
+.table{
+  border-bottom: 1px solid #ccc;
+}
 
 .table th, .table td {
   padding: 0.25rem;
