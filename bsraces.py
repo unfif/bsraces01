@@ -1,6 +1,7 @@
 # In[]
 from flask import Flask, render_template
-import os, requests, copy
+from jinja2 import Environment
+import os, requests, lxml, copy
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -18,6 +19,9 @@ def delattrs(obj, attrlist):
         for each in attrs:
             del each[attr]
 
+def jrender(html, dict):
+    return Environment().from_string(html).render(dict)
+
 defaultlayout = '''
 <!DOCTYPE html>
 <html lang="ja">
@@ -25,11 +29,12 @@ defaultlayout = '''
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>test</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#resultsModal01">詳細情報</button>
     <div class="container-fluid text-dark">
     </div>
     <script src="../static/js/jquery-3.3.1.min.js"></script>
@@ -37,10 +42,12 @@ defaultlayout = '''
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/main.js"></script>
 </body>
-</html>'''.replace('\n', '')
+</html>'''.replace('    ', '').replace('\n', '')
 
+# defaultlayout = Environment().from_string(defaultlayout).render(title = 'race details')
+defaultlayout = jrender(defaultlayout, {'title': 'Race Details'})
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0603'
+racelistid = 'p0610'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 racelistreq = requests.get(racelisturl) # commentouted posibelity
 # racelistreq.status_code
@@ -68,10 +75,13 @@ for i, place in enumerate(tagplacelist):
     detaillist[i]['title'] = titles[i]
     detaillist[i]['urls'] = urls
     detaillist[i]['bsraces'] = []
+    detaillist[i]['bsracesorig'] = []
     for j, detailurl in enumerate(detaillist[i]['urls']):
         bsraces = detaillist[i]['bsraces']
         reqdetailurl = requests.get(detailurl) # commentouted posibelity
-        bsraces.append(BeautifulSoup(reqdetailurl.content, 'lxml'))
+        bsrace = BeautifulSoup(reqdetailurl.content, 'lxml')
+        detaillist[i]['bsracesorig'].append(bsrace)
+        bsraces.append(copy.copy(bsrace))
         unwraptags(bsraces[j], ['br', 'diary_snap', 'diary_snap_cut'])
         delattrs(bsraces[j], ['style', 'cellpadding', 'cellspacing'])
         for table in bsraces[j]('table'):
@@ -89,7 +99,7 @@ for i, place in enumerate(tagplacelist):
         bsraces[j].select('.table-responsive')[0].find_parent()['class'] = ['tblwrap']
         bsraces[j].select('.tblwrap')[0].insert(0, bsraces[j].new_tag('div'))
         bsraces[j].select('.tblwrap > div')[0]['class'] = ['tbltitle', 'bg-light', 'text-dark']
-        bsraces[j].select('.tblwrap > .tbltitle')[0].insert(0, bsraces[j].new_tag('h2'))
+        # bsraces[j].select('.tblwrap > .tbltitle')[0].insert(0, bsraces[j].new_tag('h2'))
         # bsraces[j].select('.tblwrap > .tbltitle > h2')[0].string = '{:02}'.format(j + 1) + 'R'
 
         bsraces[j].select('.race_table_01')[0].append(bsraces[j].new_tag('thead'))
@@ -106,11 +116,12 @@ for i, place in enumerate(tagplacelist):
         # bsraces[j].select('.race_place .active')[0].text
         # bsraces[j].select('.race_place ul.fc')[0]
         # bsraces[j].select('.mainrace_data .data_intro')[0]
-        racenum = bsraces[j].select('.mainrace_data .racedata h1')[0].text
+        racename = bsraces[j].select('.mainrace_data .racedata h1')[0].text
         bsraces[j].select('.mainrace_data .racedata h1')[0].replace_with(bsraces[j].new_tag('h5'))
-        bsraces[j].select('.mainrace_data .racedata h5')[0].append(racenum)
+        bsraces[j].select('.mainrace_data .racedata h5')[0].append(racename)
         # bsraces[j].select('.mainrace_data .racedata')[0]
-        bsraces[j].select('.mainrace_data .racedata dt')[0].string = bsraces[j].select('.mainrace_data .racedata dt')[0].string.strip().zfill(3)
+        racenum = bsraces[j].select('.mainrace_data .racedata dt')[0].string.strip().zfill(3)
+        bsraces[j].select('.mainrace_data .racedata dt')[0].string = racenum
         # bsraces[j].select('.mainrace_data .race_otherdata')[0]
 
         bsraces[j].select('.tblwrap > .tbltitle')[0].append(bsraces[j].select('.DateList_Box .active')[0])
@@ -121,13 +132,35 @@ for i, place in enumerate(tagplacelist):
 bshtml = BeautifulSoup(defaultlayout, 'lxml')
 for detail in detaillist:
     for bsrace in detail['bsraces']:
-        bshtml.find('div', attrs={'class': 'container-fluid'}).append(copy.copy(bsrace.select('.tblwrap')[0]))
+        bshtml.select('.container-fluid')[0].append(bsrace.select('.tblwrap')[0])
+
+# In[]
+modalclass = bsraces[0].select('.race_result')[0]['class']
+modalclass.extend(['modal', 'fade'])
+bsraces[0].select('.race_result')[0].attrs = {
+    'id': 'resultsModal01',
+    'class': modalclass,
+    'tabindex': '-1',
+    'role': 'dialog',
+    'aria-labelledby': 'resultsModal01Label',
+    'aria-hidden': 'true'}
+modalbody = bsraces[0].select('.pay_block')[0].find_parent()
+modalbody['class'] = ['modal-body']
+modalbody.wrap(bsraces[0].new_tag('div'))
+modalbody.find_parent()['class'] = ['modal-content']
+modalbody.find_parent().wrap(bsraces[0].new_tag('div'))
+modalbody.find_parent().find_parent().attrs = {'class': ['modal-dialog'], 'roll': 'document'}
+
+bsraces[0].select('#resultsModal01 > dl')[0]['class'] = ['raptime']
+bsraces[0].select('#resultsModal01 .modal-body')[0].append(bsraces[0].select('#resultsModal01 > dl')[0])
+
+bshtml.select('.container-fluid')[0].append(bsraces[0].select('#resultsModal01')[0])
+# bshtml.select('#resultsModal01')[0]
 
 with open('C:/Users/pathz/Documents/heroku/testflask01/templates/index.html', mode='w', encoding='utf-8') as fw:
     fw.write(str(bshtml).replace('\n', ''))
 
-# In[]
-@app.route('/')
+# In[]@app.route('/')
 def index():
     data = {}
 
