@@ -1,5 +1,5 @@
 # In[]
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os, requests
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     data = {}
-    
+
     return render_template('index.html', data=data)
 
 @app.route('/env')

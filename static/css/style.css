@@ -73,3 +73,7 @@ th {
 /*td {
   background: #eee;
 }*/
+
+.hidden{
+  display: none !important;
+}
