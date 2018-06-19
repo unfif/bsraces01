@@ -46,16 +46,16 @@ defaultlayout = '''
 # defaultlayout = Environment().from_string(defaultlayout).render(title = 'race details')
 defaultlayout = jrender(defaultlayout, {'title': 'Race Details'})
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0610'
+racelistid = 'p0617'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 
 # In[]
 try:
     reqracelist = requests.get(racelisturl) # commentouted posibelity
-    with open('C:/Users/pathz/Documents/heroku/testflask01/_test/tmp/req01.dat', 'wb') as fw:
+    with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req01.dat', 'wb') as fw:
         pickle.dump(reqracelist, fw)
 except requests.exceptions.RequestException as err:
-    with open('C:/Users/pathz/Documents/heroku/testflask01/_test/tmp/req01.dat', 'rb') as f:
+    with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req01.dat', 'rb') as f:
         reqracelist = pickle.load(f)
         # print(req01.status_code, req01.text)
 
@@ -87,10 +87,10 @@ for i, place in enumerate(tagplacelist):
         bsraces = detaillist[i]['bsraces']
         try:
             reqdetailurl = requests.get(detailurl) # commentouted posibelity
-            with open('C:/Users/pathz/Documents/heroku/testflask01/_test/tmp/req02.dat', 'wb') as fw:
+            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02.dat', 'wb') as fw:
                 pickle.dump(copy.copy(reqracelist), fw)
         except requests.exceptions.RequestException as err:
-            with open('C:/Users/pathz/Documents/heroku/testflask01/_test/tmp/req02.dat', 'rb') as f:
+            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02.dat', 'rb') as f:
                 reqdetailurl = pickle.load(f)
 
         bsrace = BeautifulSoup(reqdetailurl.content, 'lxml')
@@ -163,7 +163,7 @@ bsraces[0].select('#resultsModal01 .modal-body')[0].append(bsraces[0].select('#r
 bshtml.select('.container-fluid')[0].append(bsraces[0].select('#resultsModal01')[0])
 # bshtml.select('#resultsModal01')[0]
 
-with open('C:/Users/pathz/Documents/heroku/testflask01/templates/index.html', 'w', encoding='utf-8') as fw:
+with open('C:/Users/pathz/Documents/heroku/bsraces01/templates/index.html', 'w', encoding='utf-8') as fw:
     fw.write(str(bshtml).replace('\n', ''))
 
 # In[]
