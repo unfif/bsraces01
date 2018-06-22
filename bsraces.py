@@ -57,14 +57,13 @@ try:
 except requests.exceptions.RequestException as err:
     with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req01.dat', 'rb') as f:
         reqracelist = pickle.load(f)
-        # print(req01.status_code, req01.text)
 
 bsracepage = BeautifulSoup(reqracelist.content, 'lxml')
 with open('C:/Users/pathz/Documents/web/netkeiba/fapp/racelist/racelist' + racelistid + '.html', 'w', encoding='utf-8') as fw:
     fw.write(str(bsracepage).replace('\n', ''))
 
 # In[]
-tagplacelist = copy.copy(bsracepage).select('.RaceList_Box .race_top_hold_list')
+tagplacelist = bsracepage.select('.RaceList_Box .race_top_hold_list')
 # tagplacelist = [tagplacelist[0]]###
 titles = []
 races = []
@@ -87,10 +86,10 @@ for i, place in enumerate(tagplacelist):
         bsraces = detaillist[i]['bsraces']
         try:
             reqdetailurl = requests.get(detailurl) # commentouted posibelity
-            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02.dat', 'wb') as fw:
-                pickle.dump(copy.copy(reqracelist), fw)
+            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02_' + '{:04}'.format(i + 1) + '{:04}'.format(j + 1) + '.dat', 'wb') as fw:
+                pickle.dump(reqdetailurl, fw)
         except requests.exceptions.RequestException as err:
-            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02.dat', 'rb') as f:
+            with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req02_' + '{:04}'.format(i + 1) + '{:04}'.format(j + 1) + '.dat', 'rb') as f:
                 reqdetailurl = pickle.load(f)
 
         bsrace = BeautifulSoup(reqdetailurl.content, 'lxml')

@@ -4,6 +4,6 @@ $(document).ready(function(){
 
   $('.tbltitle').click(function(){
     // $(this).next('.table-responsive').slideToggle();
-    $('.disptgl').toggle();
+    $(this).siblings('.table-responsive').find('.disptgl').fadeToggle();
   })
 })
