@@ -5,8 +5,8 @@ import os, requests, lxml, copy, pickle
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-# lightmode = True
-lightmode = False
+lightmode = True
+# lightmode = False
 
 def unwraptags(obj, taglist):
     for tag in taglist:
@@ -36,7 +36,6 @@ defaultlayout = '''
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#resultsModal01">詳細情報</button> -->
     <div class="container-fluid text-body">
     </div>
     <script src="../static/js/jquery-3.3.1.min.js"></script>
@@ -49,7 +48,7 @@ defaultlayout = '''
 # defaultlayout = Environment().from_string(defaultlayout).render(title = 'race details')
 defaultlayout = jrender(defaultlayout, {'title': 'Race Details'})
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0624'
+racelistid = 'p0701'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 
 # In[]
