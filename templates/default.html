@@ -1,3 +1,4 @@
+{% import 'modal.html' as md -%}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,7 +11,15 @@
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-  <div class="container text-dark">{% block form %}{% endblock %}</div>
+  {%- include 'header.html' -%}
+  <div class="container text-body">
+    {%- block contents -%}
+    {%- endblock -%}
+    {#- include 'form.html' ignore missing -#}
+    {#- include 'modal.html' ignore missing -#}
+    {{- md.modalOpenBtn() -}}
+    {{- md.modal('<span>test</span>') -}}
+  </div>
   <script src="../static/js/jquery-3.3.1.min.js"></script>
   <script src="../static/js/popper.min.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>

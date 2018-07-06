@@ -127,11 +127,11 @@ for i, place in enumerate(tagplacelist):
 
         modalbody = bsraces[j].select('.pay_block')[0].find_parent()
         modalbody['class'] = ['modal-body']
+        bsraces[j].select('.race_result > dl')[0]['class'] = ['raptime']
+        bsraces[j].select('.modal-body')[0].append(bsraces[j].select('.raptime')[0])
         modalbody.wrap(bsraces[j].new_tag('div', **{'class': ['modal-content']}))
         modalbody.find_parent().wrap(bsraces[j].new_tag('div', roll='document', **{'class': ['modal-dialog']}))
         bsraces[j].select('.tblwrap > .modal')[0].append(bsraces[j].select('.modal-dialog')[0])
-        bsraces[j].select('.race_result > dl')[0]['class'] = ['raptime']
-        bsraces[j].select('.modal-body')[0].append(bsraces[j].select('.raptime')[0])
         bsraces[j].select('.tblwrap')[0].append(bsraces[j].select('#resultsModal' + '{:02}'.format(j))[0])
 
         bsraces[j].select('.tbltitle')[0].append(bsraces[j].new_tag('table', **{'class': ['infotbl', 'hidden']}))

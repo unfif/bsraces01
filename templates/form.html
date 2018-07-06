@@ -1,29 +1,29 @@
-{% extends 'default.html' %}
-{% block form %}
-    <form class="w-75" style="margin: 0 auto;">
-      <div class="row form-group justify-content-center col-8">
-        <label class="col-form-label" for="get01">Get01</label>
-        <input type="text" class="form-control" id="get01" name="get01" value="getval01">
-      </div>
-      <div class="row form-group justify-content-center col-8">
-        <label class="col-form-label" for="get02">Get02</label>
-        <input type="text" class="form-control" id="get02" name="get02" value="getval02">
-      </div>
-      <div class="row form-group justify-content-end col-10">
-        <button type="submit" class="btn btn-primary">GET</button>
-      </div>
-    </form>
-    <form class="w-75" method="post" action="{{ url_for('form') }}" style="margin: 0 auto;">
-      <div class="row form-group justify-content-center col-8">
-        <label class="col-form-label" for="post01">Post01</label>
-        <input type="text" class="form-control" id="post01" name="post01" value="postval01">
-      </div>
-      <div class="row form-group justify-content-center col-8">
-        <label class="col-form-label" for="post02">Post02</label>
-        <input type="text" class="form-control" id="post02" name="post02" value="postval02">
-      </div>
-      <div class="row form-group justify-content-end col-10">
-        <button type="submit" class="btn btn-primary">POST</button>
-      </div>
-    </form>
-{% endblock %}
+{%- extends 'default.html' -%}
+{%- block contents -%}
+<form class="w-75" style="margin: 0 auto;">
+  <div class="row form-group justify-content-center col-8">
+    <label class="col-form-label" for="get01">Get01</label>
+    <input type="text" class="form-control" id="get01" name="get01" value="getval01">
+  </div>
+  <div class="row form-group justify-content-center col-8">
+    <label class="col-form-label" for="get02">Get02</label>
+    <input type="text" class="form-control" id="get02" name="get02" value="getval02">
+  </div>
+  <div class="row form-group justify-content-end col-10">
+    <button type="submit" class="btn btn-primary">GET</button>
+  </div>
+</form>
+<form class="w-75" method="post" style="margin: 0 auto;">
+  <div class="row form-group justify-content-center col-8">
+    <label class="col-form-label" for="post01">Post01</label>
+    <input type="text" class="form-control" id="post01" name="post01" value="postval01">
+  </div>
+  <div class="row form-group justify-content-center col-8">
+    <label class="col-form-label" for="post02">Post02</label>
+    <input type="text" class="form-control" id="post02" name="post02" value="postval02">
+  </div>
+  <div class="row form-group justify-content-end col-10">
+    <button type="submit" class="btn btn-primary">POST</button>
+  </div>
+</form>
+{%- endblock -%}

@@ -1,47 +1,27 @@
-<!-- Button trigger modal -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/fontawesome/all.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-</head>
-<body>
-    <div class="container-fluid text-body">
+{% set footerbtn = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-primary">Button</button>' -%}
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+{% macro modalOpenBtn(idnum = 0, idprefix = '') -%}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ idprefix }}modal_{{ idnum }}">modal</button>
+{% endmacro -%}
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% macro modal(modalbody = '', modaltitle = 'modal', idnum = 0, idprefix = '', modalfooter = footerbtn) %}
+<div class="modal fade" id="{{ idprefix }}modal_{{ idnum }}" tabindex="-1" role="dialog" aria-labelledby="{{ idprefix }}modal_{{ idnum }}Label" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="{{ idprefix }}modal_{{ idnum }}Label">{{ modaltitle }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        {{- modalbody -}}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        {{- modalfooter -}}
       </div>
     </div>
   </div>
 </div>
-
-</div>
-<script src="../static/js/jquery-3.3.1.min.js"></script>
-<script src="../static/js/popper.min.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
-<script src="../static/js/main.js"></script>
-</body>
-</html>
+{%- endmacro -%}

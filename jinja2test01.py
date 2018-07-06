@@ -1,11 +1,20 @@
 from jinja2 import Environment, FileSystemLoader
 import os
 
-os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
-os.path.join(os.getcwd(), 'templates')
-os.listdir(os.path.join(os.getcwd(), 'templates'))
+cwd = os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
+tpldir = os.path.join(os.getcwd(), 'templates')
+os.listdir(tpldir)
 
-tmpldir = os.path.join(os.getcwd(), 'templates')
-tmplenv = Environment(loader = FileSystemLoader(tmpldir), trim_blocks = True)
+env = Environment(loader = FileSystemLoader(tpldir), trim_blocks = True, lstrip_blocks = True)
 
-tmplenv.get_template('default.html').render({'title': 'test jinja2'})
+tpls = {}
+for file in os.listdir(tpldir):
+    tpls[os.path.splitext(file)[0]] = env.get_template(file)
+
+# tpl = env.get_template('default.html')
+# html = tpl.render({'title': 'test jinja2'})
+data = {'title': 'test jinja2'}
+render = tpls['form'].render(data).replace('\n', '')
+
+with open(os.path.join(tpldir, 'testjinja01.html'), 'w', encoding='utf-8') as fw:
+    fw.write(render)
