@@ -12,13 +12,13 @@
 </head>
 <body>
   {%- include 'header.html' -%}
-  <div class="container text-body">
+  <div class="container{% if container_fluid %}-fluid{% endif %} text-body">
     {%- block contents -%}
     {%- endblock -%}
     {#- include 'form.html' ignore missing -#}
     {#- include 'modal.html' ignore missing -#}
-    {{- md.modalOpenBtn() -}}
-    {{- md.modal('<span>test</span>') -}}
+    {#-{- md.modalOpenBtn() -}-#}
+    {#-{- md.modal('<span>test</span>') -}-#}
   </div>
   <script src="../static/js/jquery-3.3.1.min.js"></script>
   <script src="../static/js/popper.min.js"></script>

@@ -1,12 +1,29 @@
 # In[]
 from flask import Flask, render_template
-from jinja2 import Environment
+from jinja2 import Environment, FileSystemLoader
 import os, requests, lxml, copy, pickle
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 lightmode = True
 # lightmode = False
+
+cwd = os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
+tpldir = os.path.join(os.getcwd(), 'templates')
+env = Environment(
+    loader = FileSystemLoader(tpldir),
+    trim_blocks = True,
+    lstrip_blocks = True
+)
+tpls = {}
+for file in os.listdir(tpldir):
+    tpls[os.path.splitext(file)[0]] = env.get_template(file)
+
+data = {
+    'title': 'Race Details',
+    'container_fluid': True
+}
+defaultlayout = tpls['default'].render(data).replace('\n', '')
 
 def unwraptags(obj, taglist):
     for tag in taglist:
@@ -20,35 +37,11 @@ def delattrs(obj, attrlist):
         for each in attrs:
             del each[attr]
 
-def jrender(html, dict):
+def strrender(html, dict):
     return Environment().from_string(html).render(dict)
 
-defaultlayout = '''
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/fontawesome/all.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-</head>
-<body>
-    <div class="container-fluid text-body">
-    </div>
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
-    <script src="../static/js/popper.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/main.js"></script>
-</body>
-</html>'''.replace('    ', '').replace('\n', '')
-
-# defaultlayout = Environment().from_string(defaultlayout).render(title = 'race details')
-defaultlayout = jrender(defaultlayout, {'title': 'Race Details'})
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0701'
+racelistid = 'p0708'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 
 # In[]
@@ -108,6 +101,7 @@ for i, place in enumerate(tagplacelist):
             for content in contents:
                 th.string += content
 
+        # if j == 0: print(bsraces[j])
         bsraces[j].select('.race_table_01')[0].wrap(bsraces[j].new_tag('div', **{'class': ['table-responsive']}))
         bsraces[j].select('.table-responsive')[0].wrap(bsraces[j].new_tag('div', **{'class': ['tblwrap']}))
         bsraces[j].select('.tblwrap')[0].insert(0, bsraces[j].new_tag('div', **{'class': ['titlewrap', 'd-flex']}))
@@ -124,6 +118,17 @@ for i, place in enumerate(tagplacelist):
             'role': 'dialog',
             'aria-labelledby': 'resultsModal' + '{:02}'.format(j) + 'Label',
             'aria-hidden': 'true'}))
+
+        # jinja2用定義リスト
+        # modalcontent = bsraces[j].new_tag('modalcontent', **{'class': 'modalcontent'})
+        # for dl in bsraces[j].select('.race_result dl'):
+        #     if not dl.has_attr('class'): dl['class'] = ['raptime']
+        #     modalcontent.append(dl)
+        #
+        # modalcontent.insert(0, "<modalbody>{%- md.modal(<contents></contents>) -%}{%- block contents -%}</modalbody>")
+        # modalcontent.append("{%- endblock -%}")
+        # modalcontent.unwrap()
+        # print(modalcontent)
 
         modalbody = bsraces[j].select('.pay_block')[0].find_parent()
         modalbody['class'] = ['modal-body']
@@ -195,10 +200,22 @@ for i, place in enumerate(tagplacelist):
 
         tbltitle.append(bsraces[j].select('.mainrace_data .race_otherdata')[0])
 
-bshtml = BeautifulSoup(defaultlayout, 'lxml')
+# bshtml = BeautifulSoup(defaultlayout, 'lxml')
+# for detail in detaillist:
+#     for bsrace in detail['bsraces']:
+#         bshtml.select('.container-fluid')[0].append(bsrace.select('.tblwrap')[0])
+bshtml = BeautifulSoup('<container class="container-fluid"></container>', 'lxml')
 for detail in detaillist:
     for bsrace in detail['bsraces']:
         bshtml.select('.container-fluid')[0].append(bsrace.select('.tblwrap')[0])
+
+bshtml.container.insert(0, "{%- extends 'default.html' -%}{%- block contents -%}")
+bshtml.container.append("{%- endblock -%}")
+bshtml.container.unwrap()
+bshtml.body.unwrap()
+bshtml.html.unwrap()
+# print(bshtml)
+bshtml = env.from_string(str(bshtml)).render(data)
 
 with open('C:/Users/pathz/Documents/heroku/bsraces01/templates/index.html', 'w', encoding='utf-8') as fw:
     fw.write(str(bshtml).replace('\n', ''))

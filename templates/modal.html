@@ -5,7 +5,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ idprefix }}modal_{{ idnum }}">modal</button>
 {% endmacro -%}
 
-{% macro modal(modalbody = '', modaltitle = 'modal', idnum = 0, idprefix = '', modalfooter = footerbtn) %}
+{% macro modal(modalbody = '', modaltitle = 'modal', idprefix = '', idnum = 0, modalfooter = footerbtn) %}
 <div class="modal fade" id="{{ idprefix }}modal_{{ idnum }}" tabindex="-1" role="dialog" aria-labelledby="{{ idprefix }}modal_{{ idnum }}Label" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
