@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 "beautifulsoup4" = "*"
 requests = "*"
-lxml = "*"
+lxml = {path = "C:/Users/pathz/Downloads/lxml-4.2.3-cp37-cp37m-win32.whl"}
 numpy = "*"
 pandas = "*"
 jsonify = "*"
@@ -20,7 +20,7 @@ chardet = "*"
 click = "*"
 idna = "*"
 itsdangerous = "*"
-netifaces = "*"
+netifaces = {path = "C:/Users/pathz/Downloads/netifaces-0.10.7-cp37-cp37m-win32.whl"}
 protobuf = "*"
 "psycopg2" = "*"
 python-dateutil = "*"
@@ -42,8 +42,9 @@ Werkzeug = "*"
 Flask = "*"
 gTTS = "*"
 "Flask-Psycopg2" = "*"
+flask-gtts = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

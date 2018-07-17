@@ -1,12 +1,13 @@
 # In[]
 from flask import Flask, render_template
 from jinja2 import Environment, FileSystemLoader
-import os, requests, lxml, copy, pickle
+import os, requests, lxml, copy, pickle, re
 from bs4 import BeautifulSoup
+import pandas as pd
 
 app = Flask(__name__)
-lightmode = True
-# lightmode = False
+lightmode = False
+# lightmode = True
 
 cwd = os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
 tpldir = os.path.join(os.getcwd(), 'templates')
@@ -41,7 +42,7 @@ def strrender(html, dict):
     return Environment().from_string(html).render(dict)
 
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0708'
+racelistid = 'p0715'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 
 # In[]
@@ -53,19 +54,25 @@ except requests.exceptions.RequestException as err:
     with open('C:/Users/pathz/Documents/heroku/bsraces01/_test/tmp/req01.dat', 'rb') as f:
         reqracelist = pickle.load(f)
 
-bsracepage = BeautifulSoup(reqracelist.content, 'lxml')
+bsracepage = BeautifulSoup(reqracelist.text, 'lxml')
 with open('C:/Users/pathz/Documents/web/netkeiba/fapp/racelist/racelist' + racelistid + '.html', 'w', encoding='utf-8') as fw:
     fw.write(str(bsracepage).replace('\n', ''))
 
 # In[]
 tagplacelist = bsracepage.select('.RaceList_Box .race_top_hold_list')
-if lightmode: tagplacelist = [tagplacelist[0]]###
+# if lightmode: tagplacelist = [tagplacelist[0]]###
 titles = []
 races = []
 detaillist = []
+raceplaceno = []
+raceinfos = []
 for i, place in enumerate(tagplacelist):
-    titles.append(place.select('.kaisaidata')[0].text)
+    placedate = place.select('.kaisaidata')[0].text
+    titles.append(placedate)
     races.append(place.ul('li'))
+    raceinfos.append({})
+    raceinfos[i]['placedate'] = placedate
+    raceinfos[i]['raceorder'] = []
 
     urls = []
     for race in races[i]:
@@ -101,6 +108,9 @@ for i, place in enumerate(tagplacelist):
             for content in contents:
                 th.string += content
 
+        raceinfos[i]['raceorder'].append(pd.read_html(str(bsraces[j].select('.race_table_01')[0]), header = 0)[0])
+        # df01.append(pd.read_html(str(bsraces[j].select('.race_table_01')[0]), header = 0)[0])
+
         # if j == 0: print(bsraces[j])
         bsraces[j].select('.race_table_01')[0].wrap(bsraces[j].new_tag('div', **{'class': ['table-responsive']}))
         bsraces[j].select('.table-responsive')[0].wrap(bsraces[j].new_tag('div', **{'class': ['tblwrap']}))
@@ -119,7 +129,7 @@ for i, place in enumerate(tagplacelist):
             'aria-labelledby': 'resultsModal' + '{:02}'.format(j) + 'Label',
             'aria-hidden': 'true'}))
 
-        # jinja2用定義リスト
+        # jinja2モーダル用定義リスト
         # modalcontent = bsraces[j].new_tag('modalcontent', **{'class': 'modalcontent'})
         # for dl in bsraces[j].select('.race_result dl'):
         #     if not dl.has_attr('class'): dl['class'] = ['raptime']
@@ -159,6 +169,7 @@ for i, place in enumerate(tagplacelist):
         bsraces[j].select('.mainrace_data .racedata h5')[0].append(racename)
         racenum = bsraces[j].select('.mainrace_data .racedata dt')[0].string.strip().zfill(3)
         bsraces[j].select('.mainrace_data .racedata dt')[0].string = racenum
+        # print(bsraces[j].select('.mainrace_data'))
 
         # テーブルタイトル部に各種要素を追加
         tbltitle = bsraces[j].select('.titlewrap > .tbltitle')[0]
@@ -181,6 +192,9 @@ for i, place in enumerate(tagplacelist):
             else:
                 bsraces[j].select('.tbltitle > .infotbl > tr > td')[-1]['class'] = ['text-muted']
             bsraces[j].select('.tbltitle > .infotbl > tr > td')[-1].string = place.text
+
+        raceplace = bsraces[j].select('.race_place ul.fc a.active')[0].string
+        raceplaceno.append(raceplace + racenum)
 
         tbltitle.append(bsraces[j].select('.race_place ul.fc')[0])
         bsraces[j].select('.tbltitle > .infotbl')[0].append(bsraces[j].new_tag('tr'))
@@ -216,6 +230,57 @@ bshtml.body.unwrap()
 bshtml.html.unwrap()
 # print(bshtml)
 bshtml = env.from_string(str(bshtml)).render(data)
+# print(bshtml)
 
 with open('C:/Users/pathz/Documents/heroku/bsraces01/templates/index.html', 'w', encoding='utf-8') as fw:
     fw.write(str(bshtml).replace('\n', ''))
+
+# In[]
+raceinfos
+len(raceinfos[0]['raceorder'])
+raceinfos[0]['raceorder'][0]['騎手']
+
+ptn = '☆|▲|△'
+jockeyinfo = None
+jockeyinfo2 = []
+for placeinfo in raceinfos:
+    raceorders = []
+    for info in placeinfo['raceorder']:
+        substr = []
+        for jk in info['騎手']:
+            sub = re.sub(ptn, '', jk)
+            substr.append(sub)
+        jockeyinfo = pd.concat([jockeyinfo, pd.Series(substr)], axis=1, ignore_index=True)
+        raceorders.append(substr)
+    jockeyinfo2.append(raceorders)
+
+len(jockeyinfo2[0])
+jockeyinfo.columns = raceplaceno
+jockeyinfo
+
+jockeyinfo.iloc[0].value_counts()
+jockeyinfo.iloc[0]
+jockeyinfo.iloc[1]
+pd.concat([jockeyinfo.iloc[0], jockeyinfo.iloc[1]])
+pd.concat([jockeyinfo.iloc[0], jockeyinfo.iloc[1]]).value_counts()
+pd.concat([jockeyinfo.iloc[0], jockeyinfo.iloc[1], jockeyinfo.iloc[2]]).value_counts()
+jockeyinfo.nunique()
+
+
+list(jockeyinfo.iterrows())[0]
+cctrows = pd.Series([])
+for row in jockeyinfo.iterrows():
+    # print(row[1])
+    # pd.concat([cctrows, row[1]], axis=1, ignore_index=True)
+    cctrows.append(row[1])
+
+cctrows.nunique()
+
+# In[]
+s1 = pd.Series([1,2,3,4])
+s2 = pd.Series([5,6,7,8])
+s3 = s1.append(s2)
+s3 = pd.concat([s1,s2], axis=1)
+s3
+
+help(re)
