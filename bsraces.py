@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 lightmode = False
-lightmode = True
+# lightmode = True
 
 cwd = os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
 tpldir = os.path.join(os.getcwd(), 'templates')
