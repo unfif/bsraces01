@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 lightmode = False
-# lightmode = True
+lightmode = True
 
 cwd = os.chdir('C:/Users/pathz/Documents/heroku/bsraces01')
 tpldir = os.path.join(os.getcwd(), 'templates')
@@ -42,7 +42,7 @@ def strrender(html, dict):
     return Environment().from_string(html).render(dict)
 
 baseurl = 'http://race.netkeiba.com'
-racelistid = 'p0715'
+racelistid = 'p0722'
 racelisturl = baseurl + '/?pid=race_list_sub&id=' + racelistid
 
 # In[]
@@ -64,7 +64,7 @@ tagplacelist = bsracepage.select('.RaceList_Box .race_top_hold_list')
 titles = []
 races = []
 detaillist = []
-raceplaceno = []
+raceplacenos = []
 raceinfos = []
 for i, place in enumerate(tagplacelist):
     placedate = place.select('.kaisaidata')[0].text
@@ -194,7 +194,7 @@ for i, place in enumerate(tagplacelist):
             bsraces[j].select('.tbltitle > .infotbl > tr > td')[-1].string = place.text
 
         raceplace = bsraces[j].select('.race_place ul.fc a.active')[0].string
-        raceplaceno.append(raceplace + racenum)
+        raceplacenos.append(raceplace + racenum)
 
         tbltitle.append(bsraces[j].select('.race_place ul.fc')[0])
         bsraces[j].select('.tbltitle > .infotbl')[0].append(bsraces[j].new_tag('tr'))
@@ -243,8 +243,10 @@ raceinfos[0]['raceorder'][0]['騎手']
 ptn = '☆|▲|△'
 jockeyinfo = None
 jockeyinfo2 = []
+jockeyinfo3 = {}
 for placeinfo in raceinfos:
     raceorders = []
+    raceorders2 = {}
     for info in placeinfo['raceorder']:
         substr = []
         for jk in info['騎手']:
@@ -252,11 +254,16 @@ for placeinfo in raceinfos:
             substr.append(sub)
         jockeyinfo = pd.concat([jockeyinfo, pd.Series(substr)], axis=1, ignore_index=True)
         raceorders.append(substr)
+        raceorders2.update({'substr': substr})
+
     jockeyinfo2.append(raceorders)
+    jockeyinfo3.update({'raceorder': raceorders})
 
 len(jockeyinfo2[0])
-jockeyinfo.columns = raceplaceno
+jockeyinfo.columns = raceplacenos
 jockeyinfo
+jockeyinfo2
+jockeyinfo3
 
 jockeyinfo.iloc[0].value_counts()
 jockeyinfo.iloc[0]
@@ -280,7 +287,7 @@ cctrows.nunique()
 s1 = pd.Series([1,2,3,4])
 s2 = pd.Series([5,6,7,8])
 s3 = s1.append(s2)
-s3 = pd.concat([s1,s2], axis=1)
+s3 = pd.concat([s1,s2], axis=0)
 s3
 
 help(re)

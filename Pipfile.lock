@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d0aa626a2cd63c50bfb0fa5e9590ef1d3ad62e9f97c35743b0f50304dec83aa0"
+            "sha256": "e26aa97186041fbd8e95b9d407e3f19eb4552b0103e09c67d2fac0cf932a8812"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -183,7 +183,7 @@
                 "sha256:dc62c0840b2fc7753550b40405532a3e125c0d3761f34af948873393aa688160",
                 "sha256:f7d9d5aa1c7e54167f1a3cba36b5c52c7c540f30952c9bd7d9302a1eda318424"
             ],
-            "path": "C:/Users/pathz/Downloads/lxml-4.2.3-cp37-cp37m-win32.whl",
+            "index": "pypi",
             "version": "==4.2.3"
         },
         "markupsafe": {
@@ -215,7 +215,7 @@
                 "sha256:e6d52aee254f9cf6192b54c156c67d54dcf451bec6781580844af892e4bf36bb",
                 "sha256:e76d38d9cff51ecf9fd5b8d0adf63f7b8875e1ac8548ccb52264939e308b771e"
             ],
-            "path": "C:/Users/pathz/Downloads/netifaces-0.10.7-cp37-cp37m-win32.whl",
+            "index": "pypi",
             "version": "==0.10.7"
         },
         "numpy": {
