@@ -43,6 +43,8 @@ Flask = "*"
 gTTS = "*"
 "Flask-Psycopg2" = "*"
 flask-gtts = "*"
+twisted = {path = "C:/Users/pathz/Downloads/Twisted-18.7.0-cp37-cp37m-win32.whl"}
+scrapy = "*"
 
 [dev-packages]
 
